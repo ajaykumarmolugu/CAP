@@ -23,7 +23,7 @@ steps:
     versioningType: cloud_noTag
   
   tmsUpload:
-   nodeName: "qa"
+   nodeName: "QA"
    credentialId: "zcloudsk"
 
 

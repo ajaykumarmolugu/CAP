@@ -1,14 +1,14 @@
 # Project configuration
 general:
-  buildTool: "mta"                                                                              # "mta", "npm", or "maven"
+  buildTool: mta                                                                             # "mta", "npm", or "maven"
 
 service:
-  buildToolVersion: "Java 21 Node 22"                                                                 # depends on buildTool value
+  buildToolVersion: Java 21 Node 22                                                                # depends on buildTool value
   stages:
     Acceptance:                                                                                 # optional, only relevant if you enable Acceptance stage
-      cfCredentialsId: "ctms-cf"
+      cfCredentialsId: ctms-cf
     Release:                                                                                    # optional, only relevant if you enable Release stage with Cloud Foundry deployment activated
-      cfCredentialsId: "ctms-cf"
+      cfCredentialsId: ctms-cf
 
 # Stages configuration
 stages:
@@ -22,9 +22,9 @@ stages:
 
   Acceptance:
     cloudFoundryDeploy: true                                                                    # true, if you want to deploy to Cloud Foundry test space (default: false)
-    cfApiEndpoint: 'https://api.cf.us10-001.hana.ondemand.com'
-    cfOrg: 'de1cffeftrial'
-    cfSpace: 'dev'
+    cfApiEndpoint: https://api.cf.us10-001.hana.ondemand.com
+    cfOrg: de1cffeftrial
+    cfSpace: dev
     deployType: "standard"
     npmExecuteEndToEndTests: true 
     tmsUpload: true                                                              # true, if you want to execute end-to-end acceptance tests using WebdriverIO (default: false)
@@ -35,9 +35,9 @@ stages:
      
   Release:
     cloudFoundryDeploy: true                                                                    # true, if you want to deploy to Cloud Foundry. If you set this parameter to true, the CloudFoundryDeploy step is mandatory
-    cfApiEndpoint:  'https://api.cf.us10-001.hana.ondemand.com'                   # for example, "https://api.cf.eu10.hana.ondemand.com"
-    cfOrg: 'de1cffeftrial_qa-sodx2j44'
-    cfSpace: 'QA'                                               # the Cloud Foundry space, to which you want to deploy your application
+    cfApiEndpoint:  https://api.cf.us10-001.hana.ondemand.com                   # for example, "https://api.cf.eu10.hana.ondemand.com"
+    cfOrg: de1cffeftrial_qa-sodx2j44
+    cfSpace: QA                                              # the Cloud Foundry space, to which you want to deploy your application
     cfAppName: ZCloud
     deployType: "standard"
     tmsUpload: true                                                                             # true, if you want to upload your artifact to SAP Cloud Transport Management. If you set this parameter to true, the tmsUpload
@@ -47,7 +47,7 @@ stages:
 steps:
 # Init stage step 
   artifactPrepareVersion:
-    versioningType: 'cloud_noTag'           # or "cloud", if you want your pipeline to write Git tags. In this case, you need to add the gitHttpsCredentialsId parameter
+    versioningType: cloud_noTag          # or "cloud", if you want your pipeline to write Git tags. In this case, you need to add the gitHttpsCredentialsId parameter
                                                                                                 # or "library" for maven. In this case, the version needs to be set in the pom.xml file
 # Build stage step 
   npmExecuteLint:
@@ -61,16 +61,16 @@ steps:
 # Acceptance stage steps 
   cloudFoundryDeploy: true                                                                     # true, if you want to deploy to Cloud Foundry test space (default: false)
   npmExecuteEndToEndTests:                                                                      # only relevant, if you set the npmExecuteEndToEndTests parameter in the Accepance stage to true
-    runScript: 'cds-serve'                                                                         # enter the name of the test script to be executed (you can find it in the scripts section of your package.json file) (default: "wdi5")                      
-    baseUrl: 'https://de1cffeftrial-dev-zcloud-srv.cfapps.us10-001.hana.ondemand.com'                                                                       # enter the URL from the Application Routes section of your application from your SAP, BTP subaccount                       														      								
+    runScript: cds-serve                                                                        # enter the name of the test script to be executed (you can find it in the scripts section of your package.json file) (default: "wdi5")                      
+    baseUrl: https://de1cffeftrial-dev-zcloud-srv.cfapps.us10-001.hana.ondemand.com                                                                       # enter the URL from the Application Routes section of your application from your SAP, BTP subaccount                       														      								
    
 
                  
 
 # Release stage steps 
 cloudFoundryDeploy:                                                                           # only relevant, if you set the cloudFoundryDeploy parameter in the Release stage to true
-    mtaDeployParameters: "-f --version-rule ALL"
+    mtaDeployParameters: -f --version-rule ALL
     
 tmsExport:                                                                                    # only relevant, if you set the tmsExport parameter in the Release stage to true
-    nodeName: "QA"
-    credentialsId: "zcloudsk"
+    nodeName: QA
+    credentialsId: zcloudsk

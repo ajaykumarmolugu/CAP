@@ -47,7 +47,7 @@ stages:
 steps:
 # Init stage step 
   artifactPrepareVersion:
-    versioningType: cloud_noTag          # or "cloud", if you want your pipeline to write Git tags. In this case, you need to add the gitHttpsCredentialsId parameter
+    versioningType: cloud          # or "cloud", if you want your pipeline to write Git tags. In this case, you need to add the gitHttpsCredentialsId parameter
                                                                                                 # or "library" for maven. In this case, the version needs to be set in the pom.xml file
 # Build stage step 
   npmExecuteLint:

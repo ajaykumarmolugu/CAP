@@ -26,7 +26,8 @@ stages:
     cfOrg: 'de1cffeftrial'
     cfSpace: 'dev'
     deployType: "standard"
-    npmExecuteEndToEndTests: true                                                               # true, if you want to execute end-to-end acceptance tests using WebdriverIO (default: false)
+    npmExecuteEndToEndTests: true 
+    tmsUpload: true                                                              # true, if you want to execute end-to-end acceptance tests using WebdriverIO (default: false)
 
   Compliance:
     sonarExecuteScan: false                                                                     # true, if you want to integrate continuous inspection of code quality (default: false). If you set this parameter to true,
@@ -46,7 +47,7 @@ stages:
 steps:
 # Init stage step 
   artifactPrepareVersion:
-    versioningType: "cloud_noTag"                                                                             # or "cloud", if you want your pipeline to write Git tags. In this case, you need to add the gitHttpsCredentialsId parameter
+    versioningType: 'cloud_noTag'           # or "cloud", if you want your pipeline to write Git tags. In this case, you need to add the gitHttpsCredentialsId parameter
                                                                                                 # or "library" for maven. In this case, the version needs to be set in the pom.xml file
 # Build stage step 
   npmExecuteLint:
@@ -60,9 +61,9 @@ steps:
 # Acceptance stage steps 
   cloudFoundryDeploy: true                                                                     # true, if you want to deploy to Cloud Foundry test space (default: false)
   npmExecuteEndToEndTests:                                                                      # only relevant, if you set the npmExecuteEndToEndTests parameter in the Accepance stage to true
-    runScript: "<wdi5>"                                                                         # enter the name of the test script to be executed (you can find it in the scripts section of your package.json file) (default: "wdi5")                      
-    baseUrl: "<base url>"                                                                       # enter the URL from the Application Routes section of your application from your SAP, BTP subaccount                       														      								
-    credentialsId: "<id of your credential to authenticate against the test application>"       # tip: avoid using a technical user credential and create a special test user instead 
+    runScript: 'cds-serve'                                                                         # enter the name of the test script to be executed (you can find it in the scripts section of your package.json file) (default: "wdi5")                      
+    baseUrl: 'https://de1cffeftrial-dev-zcloud-srv.cfapps.us10-001.hana.ondemand.com'                                                                       # enter the URL from the Application Routes section of your application from your SAP, BTP subaccount                       														      								
+   
 
                  
 

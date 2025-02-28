@@ -13,6 +13,7 @@
 ### General project setup
 general:
   inferBuildTool: true
+  buildTool: 'mta'
 
 ### Step-specific configuration
 steps:
@@ -53,5 +54,6 @@ Release:
        apiEndpoint: 'https://api.cf.us10-001.hana.ondemand.com'
        appName: 'ZCloud'
        credentialsId: 'ctms-cf'
-       tmsUpload: true
+       tmsUpload: false
+       tmsExport: true
 

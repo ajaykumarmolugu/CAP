@@ -37,13 +37,21 @@ stages:
 #      - alias: 'mySystemAlias'
 #        credentialId: 'mySystemCredentialsId'
 
-Release:
+Acceptance:
    cfTargets:
      - org: 'de1cffeftrial'
        space: 'dev'
        apiEndpoint: 'https://api.cf.us10-001.hana.ondemand.com'
        appName: 'ZCloud'
-       manifest: 'manifest.yml'
+       credentialsId: 'ctms-cf'
+       tmsUpload: true
+
+Release:
+   cfTargets:
+     - org: 'de1cffeftrial_qa-sodx2j44'
+       space: 'QA'
+       apiEndpoint: 'https://api.cf.us10-001.hana.ondemand.com'
+       appName: 'ZCloud'
        credentialsId: 'ctms-cf'
        tmsUpload: true
 

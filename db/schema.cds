@@ -5,5 +5,5 @@ entity Books {
   title  : String;
   stock  : Integer;
   sold : Integer;
-  price : Integer;
+ 
 }

@@ -32,12 +32,12 @@ stages:
   'Confirm':
     manualConfirmation: false
 
- Integration:
-   credentials:
-     - alias: 'mySystemAlias'
-       credentialId: 'mySystemCredentialsId'
+# Integration:
+#    credentials:
+#      - alias: 'mySystemAlias'
+#        credentialId: 'mySystemCredentialsId'
 
- Release:
+Release:
    cfTargets:
      - org: 'de1cffeftrial'
        space: 'dev'

@@ -3,7 +3,7 @@ general:
   buildTool: "mta"                                                                              # "mta", "npm", or "maven"
 
 service:
-  buildToolVersion: "MBTJ11N14"                                                                 # depends on buildTool value
+  buildToolVersion: "Java 21 Node 22"                                                                 # depends on buildTool value
   stages:
     Acceptance:                                                                                 # optional, only relevant if you enable Acceptance stage
       cfCredentialsId: "ctms-cf"

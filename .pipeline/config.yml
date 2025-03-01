@@ -1,76 +1,65 @@
-# Project configuration
+###
+# This file configures the project "Piper" pipeline of your project.
+# For a reference of the configuration concept and available options, please have a look into its documentation.
+#
+# The documentation for the most recent pipeline version can always be found at:
+#    https://sap.github.io/jenkins-library/
+#
+# This is a YAML-file. YAML is an indentation-sensitive file format. Please make sure to properly indent changes to it.
+###
+
+### General project setup
 general:
-  buildTool: mta                                                                             # "mta", "npm", or "maven"
-
+  inferBuildTool: true
+  buildTool: "mta"
 service:
-  buildToolVersion: Java 21 Node 22                                                                # depends on buildTool value
+  buildToolVersion: "MBTJ17N18"
   stages:
-    Acceptance:                                                                                 # optional, only relevant if you enable Acceptance stage
-      cfCredentialsId: ctms-cf
-    Release:                                                                                    # optional, only relevant if you enable Release stage with Cloud Foundry deployment activated
-      cfCredentialsId: ctms-cf
-
-# Stages configuration
+    Acceptance:
+      cfCredentialsId: "ctms-cf"
+    Release:
+      cfCredentialsId: "ctms-cf""
 stages:
   Build:
-    mavenExecuteStaticCodeChecks: false                                                         # true, if you want to execute static code checks to verify the syntax of your Java code
-    npmExecuteLint: false                                                                       # true, if you want to run a lint check that verifies the syntax of your JavaScript code
-
-  Additional Unit Tests:
-    karmaExecuteTests: false                                                                    # true, if you want to execute the Karma Test Runner (default: false)
-    npmExecuteScripts: false                                                                    # true, if you want to execute test scripts that are defined in step npmExecuteScripts
-
+    mavenExecuteStaticCodeChecks: false
+    npmExecuteLint: true
   Acceptance:
-    cloudFoundryDeploy: true                                                                    # true, if you want to deploy to Cloud Foundry test space (default: false)
-    cfApiEndpoint: https://api.cf.us10-001.hana.ondemand.com
-    cfOrg: de1cffeftrial
-    cfSpace: dev
+    cfApiEndpoint: "https://api.cf.us10-001.hana.ondemand.com"
+    cfOrg: "de1cffeftrial"
+    cfSpace: "dev"
     deployType: "standard"
-    npmExecuteEndToEndTests: true 
-    tmsUpload: true                                                              # true, if you want to execute end-to-end acceptance tests using WebdriverIO (default: false)
-
-  Compliance:
-    sonarExecuteScan: false                                                                     # true, if you want to integrate continuous inspection of code quality (default: false). If you set this parameter to true,
-                                                                                                # the sonarExecuteScan step is mandatory
-     
+    cloudFoundryDeploy: true
+    npmExecuteEndToEndTests: false
+  Malware Scan:
+    malwareExecuteScan: false
   Release:
-    cloudFoundryDeploy: true                                                                    # true, if you want to deploy to Cloud Foundry. If you set this parameter to true, the CloudFoundryDeploy step is mandatory
-    cfApiEndpoint:  https://api.cf.us10-001.hana.ondemand.com                   # for example, "https://api.cf.eu10.hana.ondemand.com"
-    cfOrg: de1cffeftrial_qa-sodx2j44
-    cfSpace: QA                                              # the Cloud Foundry space, to which you want to deploy your application
-    cfAppName: ZCloud
+    tmsExport: true
+    tmsUpload: false
+    cfApiEndpoint: "https://api.cf.us10-001.hana.ondemand.com"
+    cfOrg: "de1cffeftrial"
+    cfSpace: "dev"
     deployType: "standard"
-    tmsUpload: true                                                                             # true, if you want to upload your artifact to SAP Cloud Transport Management. If you set this parameter to true, the tmsUpload
-                                                                                                # step is mandatory
-
-# Steps configuration
+    cloudFoundryDeploy: true
+  Additional Unit Tests:
+    npmExecuteScripts: false
+  Compliance:
+    sonarExecuteScan: false
+### Step-specific configuration
 steps:
-# Init stage step 
-  artifactPrepareVersion:
-    versioningType: cloud          # or "cloud", if you want your pipeline to write Git tags. In this case, you need to add the gitHttpsCredentialsId parameter
-                                                                                                # or "library" for maven. In this case, the version needs to be set in the pom.xml file
-# Build stage step 
-  npmExecuteLint:
-    failOnError: false                                                                          # true, if you want your pipeline to fail, if the lint check reveals any errors
-
-# Test stage step 
-  npmExecuteScripts:                                                                            # only relevant, if you set the npmExecuteScripts parameter in the Additional Unit Tests stage to true
+  cloudFoundryDeploy:
+    mtaDeployParameters: "-f --version-rule ALL"
+  npmExecuteEndToEndTests:
     runScripts:
-        - "test"                                                                                # list of script names in your package.json file to be executed 
-
-# Acceptance stage steps 
-  cloudFoundryDeploy: true                                                                     # true, if you want to deploy to Cloud Foundry test space (default: false)
-  npmExecuteEndToEndTests:                                                                      # only relevant, if you set the npmExecuteEndToEndTests parameter in the Accepance stage to true
-    runScript: cds-serve                                                                        # enter the name of the test script to be executed (you can find it in the scripts section of your package.json file) (default: "wdi5")                      
-    baseUrl: https://de1cffeftrial-dev-zcloud-srv.cfapps.us10-001.hana.ondemand.com                                                                       # enter the URL from the Application Routes section of your application from your SAP, BTP subaccount                       														      								
-   
-
-                 
-
-# Release stage steps 
-cloudFoundryDeploy:                                                                           # only relevant, if you set the cloudFoundryDeploy parameter in the Release stage to true
-    mtaDeployParameters: -f --version-rule ALL
-    
-tmsExport:                                                                                    # only relevant, if you set the tmsExport parameter in the Release stage to true
-    nodeName: QA
-    credentialsId: zcloudsk
+      - ci-e2e
+    scriptOptions:
+      - --verbose
+    virtualFrameBuffer: true
+  # mavenExecute:
+  #   dockerImage: devxci/mbtci:1.0.14
+  Build:
+    npmScripts: ["install", "run build"]
+  tmsExport:
+    nodeName: "QA"
+    credentialsId: "zcloudsk"
+  artifactPrepareVersion:
+    versioningType: cloud_noTag

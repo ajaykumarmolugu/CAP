@@ -50,10 +50,8 @@ steps:
     versioningType: cloud_noTag
   cloudFoundryDeploy:
     mtaDeployParameters: "-f --version-rule ALL"
-  # mavenExecute:
-  #   dockerImage: devxci/mbtci:1.0.14
   Build:
-    npmScripts: ["install", "run build"]
+    npmScripts: ["install"]
   tmsExport:
     nodeName: "QA"
     credentialsId: "zcloudsk"

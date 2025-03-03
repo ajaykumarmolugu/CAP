@@ -18,7 +18,7 @@ service:
     Acceptance:
       cfCredentialsId: "ctms-cf"
     Release:
-      cfCredentialsId: "ctms-cf""
+      cfCredentialsId: "ctms-cf"
 stages:
   Build:
     mavenExecuteStaticCodeChecks: false
@@ -34,7 +34,7 @@ stages:
     malwareExecuteScan: false
   Release:
     tmsExport: true
-    tmsUpload: false
+    tmsUpload: true
     cfApiEndpoint: "https://api.cf.us10-001.hana.ondemand.com"
     cfOrg: "de1cffeftrial"
     cfSpace: "dev"
@@ -46,14 +46,10 @@ stages:
     sonarExecuteScan: false
 ### Step-specific configuration
 steps:
+  artifactPrepareVersion:
+    versioningType: cloud_noTag
   cloudFoundryDeploy:
     mtaDeployParameters: "-f --version-rule ALL"
-  npmExecuteEndToEndTests:
-    runScripts:
-      - ci-e2e
-    scriptOptions:
-      - --verbose
-    virtualFrameBuffer: true
   # mavenExecute:
   #   dockerImage: devxci/mbtci:1.0.14
   Build:
@@ -61,5 +57,4 @@ steps:
   tmsExport:
     nodeName: "QA"
     credentialsId: "zcloudsk"
-  artifactPrepareVersion:
-    versioningType: cloud_noTag
+

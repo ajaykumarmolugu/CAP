@@ -36,10 +36,8 @@ stages:
     tmsExport: true
     tmsUpload: false
     cfApiEndpoint: "https://api.cf.us10-001.hana.ondemand.com"
-    cfOrg: "de1cffeftrial_qa-sodx2j44"
-    cfSpace: "QA"
-    deployType: "standard"
-    cloudFoundryDeploy: true
+    cfOrg: "de1cffeftrial"
+    cfSpace: "dev"
   Additional Unit Tests:
     npmExecuteScripts: false
   Compliance:

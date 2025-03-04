@@ -34,10 +34,10 @@ stages:
     malwareExecuteScan: false
   Release:
     tmsExport: true
-    tmsUpload: true
+    tmsUpload: false
     cfApiEndpoint: "https://api.cf.us10-001.hana.ondemand.com"
-    cfOrg: "de1cffeftrial"
-    cfSpace: "dev"
+    cfOrg: "de1cffeftrial_qa-sodx2j44"
+    cfSpace: "QA"
     deployType: "standard"
     cloudFoundryDeploy: true
   Additional Unit Tests:

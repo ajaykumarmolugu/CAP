@@ -45,9 +45,7 @@ stages:
   Compliance:
     sonarExecuteScan: false
 ### Step-specific configuration
-steps:
-  artifactPrepareVersion:
-    versioningType: cloud_noTag
+steps: 
   cloudFoundryDeploy:
     mtaDeployParameters: "-f --version-rule ALL"
   Build:
@@ -55,4 +53,6 @@ steps:
   tmsExport:
     nodeName: "QA"
     credentialsId: "zcloudsk"
+  artifactPrepareVersion:
+    versioningType: cloud_noTag
 

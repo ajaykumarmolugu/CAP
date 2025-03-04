@@ -16,9 +16,9 @@ service:
   buildToolVersion: "MBTJ17N18"
   stages:
     Acceptance:
-      cfCredentialsId: "ctms-cf"
+      cfCredentialsId: "deploy-to-cf"
     Release:
-      cfCredentialsId: "ctms-cf"
+      cfCredentialsId: "deploy-to-cf"
 stages:
   Build:
     mavenExecuteStaticCodeChecks: false

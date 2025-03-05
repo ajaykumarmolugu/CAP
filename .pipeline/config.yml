@@ -47,7 +47,7 @@ steps:
   cloudFoundryDeploy:
     mtaDeployParameters: "-f --version-rule ALL"
   Build:
-    npmScripts: ["install","run build"]
+    npmScripts: ["install"]
   tmsExport:
     nodeName: "QA"
     credentialsId: "zcloudsk"
